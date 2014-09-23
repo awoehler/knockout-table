@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Knockout Table Demo</title>
+	<!--CDN Files -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+	<!--Other Library CSS files -->
+	<link href="../css/bootstrap-slider.min.css" rel="stylesheet" type="text/css">
+
+	<style>
+	div.slider.slider-vertical {
+		/* Use this to set the vertical height of the slider */
+		/* height: 800px; */
+	}
+
+	.icon-rotate90 {
+		-webkit-transform: rotate(90deg);
+		-moz-transform: rotate(90deg);
+		-ms-transform: rotate(90deg);
+		-o-transform: rotate(90deg);
+		transform: rotate(90deg);
+	}
+	</style>
+
+	<!-- CDN Files -->
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/knockout/3.2.0/knockout-min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+	<!-- Other Libraries -->
+	<script src="../js/bootstrap-slider.min.js"></script>
+
+	<!-- knockout-table Library -->
+	<script src="../js/knockout-table.js"></script>
+
+	<!-- Application Models & JS -->
+	<script src="sampleModel.js"></script>
+
+</head>
+<body>
+	<div class="container">
+		<div class="row" id="demo1">
+			<div class="col-sm-12" id="demo1">
+				<div style="float: right; padding-top: 10px; padding-bottom; 10px;">
+					<div>
+						<div class="btn btn-primary btn-xs round" style="margin-left: -2px;" title="First page" data-placement="right">
+							<span class="icon-rotate90 glyphicon glyphicon-fast-backward" data-bind="click: gotoFirstPage"></span>
+						</div><br />
+						<div class="btn btn-primary btn-xs round" style="margin-bottom: 15px; margin-left: -2px;" title="Previous page" data-placement="right">
+							<span class="icon-rotate90 glyphicon glyphicon-backward" data-bind="click: prevPage"></span>
+						</div>
+					</div>
+					<input class="scrollbar" type="text" 
+						data-slider-tooltip="show"
+						data-slider-min="-10"
+						data-slider-step="1"
+						data-slider-orientation="vertical"
+						data-slider-max="10"
+						data-slider-value="0"
+					/><br />
+					<div class="btn btn-primary btn-xs round" style="margin-top: 15px; margin-left: -2px;" title="Next page" data-placement="right">
+						<span class="icon-rotate90 glyphicon glyphicon-forward" data-bind="click: nextPage"></span>
+					</div><br />
+					<div class="btn btn-primary btn-xs round" style="margin-left: -2px;" title="Last page" data-placement="right">
+						<span class="icon-rotate90 glyphicon glyphicon-fast-forward" data-bind="click: gotoLastPage"></span>
+					</div>
+
+				</div>
+				<table class="table" style="width: 95%;">
+					<thead>
+						<tr>
+							<th>Index</th>
+							<th>Sample Property Name</th>
+						</tr>
+					</thead>
+					<tbody>
+						<!-- ko foreach: getCurrentPage -->
+							<tr>
+								<td>
+									<span data-bind="text: $index() + $parent.pageIndex() + 1"></span>
+								</td>
+								<td>
+									<span data-bind="text: propertyName"></span>
+								</td>
+							</tr>
+						<!-- /ko -->
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+<script>
+$(document).ready( function() {
+	$(".btn[title]").tooltip();
+	demo1 = new knockout_table_vm().init( {'id':'demo1','model':sampleModel_vm,'data':'data.txt' });
+	ko.applyBindings( demo1, document.getElementById('demo1') );
+});
+</script>
+</body>
+</html>
